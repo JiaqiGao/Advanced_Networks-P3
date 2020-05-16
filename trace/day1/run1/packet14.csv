@@ -1,0 +1,12 @@
+frame.number,_ws.col.Time,_ws.col.Source,_ws.col.Destination,_ws.col.Protocol,frame.len,_ws.col.Info
+"1","0.000000000","192.168.1.104","255.255.255.255","UDP","217","49154 → 6666 Len=175"
+"2","2.177037844","192.168.1.118","172.217.11.46","TCP","66","40909 → 443 [ACK] Seq=1 Ack=1 Win=255 Len=0 TSval=13855261 TSecr=2872944048"
+"3","2.199455391","172.217.11.46","192.168.1.118","TCP","66","[TCP ACKed unseen segment] 443 → 40909 [ACK] Seq=1 Ack=2 Win=249 Len=0 TSval=2872989069 TSecr=13765163"
+"4","2.905618868","192.168.1.118","192.168.1.102","TCP","176","45592 → 8009 [PSH, ACK] Seq=1 Ack=1 Win=387 Len=110 TSval=13855989 TSecr=3364270 [TCP segment of a reassembled PDU]"
+"5","2.925019309","192.168.1.102","192.168.1.118","TCP","176","8009 → 45592 [PSH, ACK] Seq=1 Ack=111 Win=299 Len=110 TSval=3364772 TSecr=13855989 [TCP segment of a reassembled PDU]"
+"6","2.925121900","192.168.1.118","192.168.1.102","TCP","66","45592 → 8009 [ACK] Seq=111 Ack=111 Win=387 Len=0 TSval=13856009 TSecr=3364772"
+"7","2.969457902","192.168.1.104","255.255.255.255","UDP","217","49154 → 6666 Len=175"
+"8","3.377771668","Cisco-Li_5b:1c:ce","Broadcast","ARP","42","Who has 192.168.1.100? Tell 192.168.1.1"
+"9","7.268045672","192.168.1.118","172.253.122.188","TCP","66","38823 → 5228 [ACK] Seq=1 Ack=1 Win=1424 Len=0 TSval=13860352 TSecr=620038290"
+"10","7.293444186","172.253.122.188","192.168.1.118","TCP","66","[TCP ACKed unseen segment] 5228 → 38823 [ACK] Seq=1 Ack=2 Win=257 Len=0 TSval=620083345 TSecr=13409823"
+"11","7.926804290","192.168.1.118","192.168.1.102","TCP","176","45592 → 8009 [PSH, ACK] Seq=111 Ack=111 Win=387 Len=110 TSval=13861010 TSecr=3364772 [TCP segment of a reassembled PDU]"

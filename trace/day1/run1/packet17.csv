@@ -1,0 +1,11 @@
+frame.number,_ws.col.Time,_ws.col.Source,_ws.col.Destination,_ws.col.Protocol,frame.len,_ws.col.Info
+"1","0.000000000","192.168.1.118","192.168.1.102","TCP","176","45592 → 8009 [PSH, ACK] Seq=1 Ack=1 Win=387 Len=110 TSval=13911304 TSecr=3369802 [TCP segment of a reassembled PDU]"
+"2","0.034843257","192.168.1.102","192.168.1.118","TCP","176","8009 → 45592 [PSH, ACK] Seq=1 Ack=111 Win=299 Len=110 TSval=3370303 TSecr=13911304 [TCP segment of a reassembled PDU]"
+"3","0.034931185","192.168.1.118","192.168.1.102","TCP","66","45592 → 8009 [ACK] Seq=111 Ack=111 Win=387 Len=0 TSval=13911339 TSecr=3370303"
+"4","4.179771161","IntelCor_b7:52:73","Cisco-Li_5b:1c:ce","ARP","60","Who has 192.168.1.1? Tell 192.168.1.118"
+"5","4.246503396","Cisco-Li_5b:1c:ce","Broadcast","ARP","42","Who has 192.168.1.100? Tell 192.168.1.1"
+"6","4.251023342","Cisco-Li_5b:1c:ce","IntelCor_b7:52:73","ARP","42","192.168.1.1 is at 58:6d:8f:5b:1c:ce"
+"7","5.037238283","192.168.1.118","192.168.1.102","TCP","176","45592 → 8009 [PSH, ACK] Seq=111 Ack=111 Win=387 Len=110 TSval=13916341 TSecr=3370303 [TCP segment of a reassembled PDU]"
+"8","5.092316674","192.168.1.102","192.168.1.118","TCP","176","8009 → 45592 [PSH, ACK] Seq=111 Ack=221 Win=299 Len=110 TSval=3370807 TSecr=13916341 [TCP segment of a reassembled PDU]"
+"9","5.092420177","192.168.1.118","192.168.1.102","TCP","66","45592 → 8009 [ACK] Seq=221 Ack=221 Win=387 Len=0 TSval=13916396 TSecr=3370807"
+"10","7.935927996","192.168.1.100","224.0.0.251","MDNS","560","Standard query response 0x0000 TXT, cache flush PTR cjqg._smb._tcp.local TXT SRV, cache flush 0 0 445 cjqg.local TXT, cache flush PTR _companion-link._tcp.local PTR cjqg._companion-link._tcp.local SRV, cache flush 0 0 53222 cjqg.local AAAA, cache flush fe80::c65:98ef:d456:4a34 A, cache flush 192.168.1.100 NSEC, cache flush cjqg._smb._tcp.local NSEC, cache flush cjqg._companion-link._tcp.local NSEC, cache flush cjqg.local OPT"
