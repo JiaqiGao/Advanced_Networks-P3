@@ -1,4 +1,4 @@
 #!/bin/sh
-open ‘https://youtube.com’
+open -a "Google Chrome" 'http://www.youtube.com'
 tshark -I -a duration:10  -T fields -e frame.number -e _ws.col.Time -e _ws.col.Source -e _ws.col.Destination -e _ws.col.Protocol -e frame.len -e _ws.col.Info -E header=y -E separator=, -E quote=d -E occurrence=f > test.csv 
 pkill chrome
