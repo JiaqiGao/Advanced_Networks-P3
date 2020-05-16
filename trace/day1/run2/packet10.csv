@@ -1,0 +1,9 @@
+frame.number,_ws.col.Time,_ws.col.Source,_ws.col.Destination,_ws.col.Protocol,frame.len,_ws.col.Info
+"1","0.000000000","192.168.1.118","192.168.1.102","TCP","176","45592 → 8009 [PSH, ACK] Seq=1 Ack=1 Win=387 Len=110 TSval=14760870 TSecr=3454756 [TCP segment of a reassembled PDU]"
+"2","0.006626895","192.168.1.102","192.168.1.118","TCP","176","8009 → 45592 [PSH, ACK] Seq=1 Ack=111 Win=299 Len=110 TSval=3455258 TSecr=14760870 [TCP segment of a reassembled PDU]"
+"3","0.006722423","192.168.1.118","192.168.1.102","TCP","66","45592 → 8009 [ACK] Seq=111 Ack=111 Win=387 Len=0 TSval=14760877 TSecr=3455258"
+"4","1.244089479","192.168.1.104","255.255.255.255","UDP","217","49154 → 6666 Len=175"
+"5","3.417676314","192.168.1.118","172.253.122.188","TCP","66","38823 → 5228 [ACK] Seq=1 Ack=1 Win=1424 Len=0 TSval=14764288 TSecr=620942206"
+"6","3.439381224","172.253.122.188","192.168.1.118","TCP","66","[TCP ACKed unseen segment] 5228 → 38823 [ACK] Seq=1 Ack=2 Win=257 Len=0 TSval=620987250 TSecr=14448866"
+"7","3.506235814","192.168.1.100","224.0.0.251","MDNS","175","Standard query 0x0000 ANY cjqg._smb._tcp.local, "QM" question ANY cjqg._companion-link._tcp.local, "QM" question SRV 0 0 445 cjqg.local SRV 0 0 53222 cjqg.local OPT"
+"8","5.008201293","192.168.1.118","192.168.1.102","TCP","176","45592 → 8009 [PSH, ACK] Seq=111 Ack=111 Win=387 Len=110 TSval=14765878 TSecr=3455258 [TCP segment of a reassembled PDU]"
