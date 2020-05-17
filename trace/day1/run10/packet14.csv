@@ -1,0 +1,12 @@
+frame.number,_ws.col.Time,_ws.col.Source,_ws.col.Destination,_ws.col.Protocol,frame.len,_ws.col.Info
+"1","0.000000000","192.168.1.118","192.168.1.102","TCP","176","38457 → 8009 [PSH, ACK] Seq=1 Ack=1 Win=364 Len=110 TSval=26065286 TSecr=5197183 [TCP segment of a reassembled PDU]"
+"2","0.003766832","192.168.1.102","192.168.1.118","TCP","176","8009 → 38457 [PSH, ACK] Seq=1 Ack=111 Win=287 Len=110 TSval=5197684 TSecr=26065286 [TCP segment of a reassembled PDU]"
+"3","0.003874260","192.168.1.118","192.168.1.102","TCP","66","38457 → 8009 [ACK] Seq=111 Ack=111 Win=364 Len=0 TSval=26065290 TSecr=5197684"
+"4","0.679983123","192.168.1.102","224.0.0.251","MDNS","183","Standard query response 0x0000 SRV, cache flush 0 0 8009 2c3f16b2-da5c-4b6f-d6cf-bfba61c12490.local"
+"5","1.248690027","IntelCor_b7:52:73","Cisco-Li_5b:1c:ce","ARP","60","Who has 192.168.1.1? Tell 192.168.1.118"
+"6","1.250677384","Cisco-Li_5b:1c:ce","IntelCor_b7:52:73","ARP","42","192.168.1.1 is at 58:6d:8f:5b:1c:ce"
+"7","4.165252753","192.168.1.104","255.255.255.255","UDP","217","49154 → 6666 Len=175"
+"8","5.005490798","192.168.1.118","192.168.1.102","TCP","176","38457 → 8009 [PSH, ACK] Seq=111 Ack=111 Win=364 Len=110 TSval=26070292 TSecr=5197684 [TCP segment of a reassembled PDU]"
+"9","5.016601274","192.168.1.102","192.168.1.118","TCP","176","8009 → 38457 [PSH, ACK] Seq=111 Ack=221 Win=287 Len=110 TSval=5198185 TSecr=26070292 [TCP segment of a reassembled PDU]"
+"10","5.016709678","192.168.1.118","192.168.1.102","TCP","66","38457 → 8009 [ACK] Seq=221 Ack=221 Win=364 Len=0 TSval=26070303 TSecr=5198185"
+"11","7.135820794","192.168.1.104","255.255.255.255","UDP","217","49154 → 6666 Len=175"
