@@ -27,7 +27,8 @@ website_directory = {
 }
 
 ip_directory = {
-    'day1': '192.168.1.118'
+    'day1': '192.168.1.118',
+    'day2': '192.168.1.118'
 }
 
 def parse_sniffer_data():
