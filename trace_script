@@ -1,0 +1,9 @@
+#! /bin/sh
+declare -a websites=("www.youtube.com" "www.yahoo.com" "www.facebook.com" "www.reddit.com" "www.instructure.com" "www.stackoverflow.com" "www.linkedin.com" "www.irs.gov" "www.nytimes.com" "www.cnn.com" "www.salesforce.com" "www.okta.com" "www.wikipedia.org" "www.imgur.com" "www.dropbox.com" "www.etsy.com" "www.hulu.com" "www.quizlet.com" "www.homedepot.com" "www.netflix.com")
+count=1
+hour=$1
+mkdir "day2/run${hour}"
+for w in "${websites[@]}"
+do
+    netsurf $w && tshark -i wlan0 -a duration:12 -T fields -e frame.number -e _ws.col.Time -e _ws.col.Source -e _ws.col.Destination -e _ws.col.Protocol -e frame.len -e _ws.col.Info -E header=y -E separator=, -E quote=d -E occurrence=f > "day2/run${hour}/packet${count}.csv" & sleep 20 && pkill netsurf & count=$((count+1))
+done
