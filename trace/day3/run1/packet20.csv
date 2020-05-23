@@ -1,9 +1,0 @@
-frame.number,_ws.col.Time,_ws.col.Source,_ws.col.Destination,_ws.col.Protocol,frame.len,_ws.col.Info
-"1","0.000000000","192.168.1.118","192.168.1.102","TCP","512","41988 → 8009 [PSH, ACK] Seq=1 Ack=1 Win=501 Len=446 TSval=2814948626 TSecr=4525864 [TCP segment of a reassembled PDU]"
-"2","0.006825200","192.168.1.118","192.168.1.102","TCP","211","41988 → 8009 [PSH, ACK] Seq=447 Ack=1 Win=501 Len=145 TSval=2814948633 TSecr=4525864 [TCP segment of a reassembled PDU]"
-"3","0.016291925","192.168.1.102","192.168.1.118","TCP","66","8009 → 41988 [ACK] Seq=1 Ack=592 Win=277 Len=0 TSval=4526148 TSecr=2814948626"
-"4","0.022048413","192.168.1.102","192.168.1.118","TCP","512","8009 → 41988 [PSH, ACK] Seq=1 Ack=592 Win=277 Len=446 TSval=4526148 TSecr=2814948626 [TCP segment of a reassembled PDU]"
-"5","0.062740588","192.168.1.118","192.168.1.102","TCP","66","41988 → 8009 [ACK] Seq=592 Ack=447 Win=501 Len=0 TSval=2814948689 TSecr=4526148"
-"6","0.790733788","192.168.1.118","104.74.65.193","TCP","66","35490 → 443 [ACK] Seq=1 Ack=1 Win=501 Len=0 TSval=1680306155 TSecr=1458604810"
-"7","0.808401175","104.74.65.193","192.168.1.118","TCP","66","[TCP ACKed unseen segment] 443 → 35490 [ACK] Seq=1 Ack=2 Win=258 Len=0 TSval=1458614954 TSecr=1680286008"
-"8","1.602024975","192.168.1.104","255.255.255.255","UDP","217","49154 → 6666 Len=175"
