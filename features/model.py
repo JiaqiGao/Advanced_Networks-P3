@@ -25,9 +25,9 @@ def get_burst(trace):
     return results
 
 def getUniquePacketLengths(trace):
-    counts = [0]*80000
+    counts = [0]*65000
     for i in trace:
-        counts[int(int(i[3]))] += 1
+        counts[int(i[3])] += 1
     
     # Overfitting
     # most_common = counts[0]
@@ -92,11 +92,22 @@ pred_Y = neighbors.predict(test_X)
 total = len(test_Y)
 correct = 0
 
+errors = {}
 for i in range(len(test_Y)):
     if pred_Y[i] == test_Y[i]:
         correct += 1
     else:
-        print("prediction: " + str(pred_Y[i]) + ", Actual: " + str(test_Y[i]))
+        code = pred_Y[i]+":"+test_Y[i]
+        if not(code in errors):
+            errors[code] = 1
+        else:
+            errors[code] += 1
+
+errors_list = sorted(errors.items(), key=lambda x: x[1], reverse=True)
+
+print("Top three wrong predictions (prediction, actual, count)")
+for i in range(3):
+    print(errors_list[i][0].split(":") + [errors_list[i][1]])
 
 print("\nRatio of correct predictions: " + str(correct/total))
 
