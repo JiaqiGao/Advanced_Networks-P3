@@ -4,26 +4,26 @@ import csv
 MAC_ADDR = 'intelcor_b7:52:73'
 
 website_directory = {
-    1: 'youtube.com',
-    2: 'yahoo.com',
-    3: 'facebook.com',
-    4: 'reddit.com',
-    5: 'instructure.com',
-    6: 'stackoverflow.com',
-    7: 'linkedin.com',
-    8: 'irs.gov',
-    9: 'nytimes.com',
-    10: 'cnn.com',
-    11: 'salesforce.com',
-    12: 'okta.com',
-    13: 'wikipedia.org',
-    14: 'imgur.com',
-    15: 'dropbox.com',
-    16: 'etsy.com',
-    17: 'hulu.com',
-    18: 'quizlet.com',
-    19: 'homedepot.com',
-    20: 'netflix.com'
+    1: 'youtube',
+    2: 'yahoo',
+    3: 'facebook',
+    4: 'reddit',
+    5: 'instructure',
+    6: 'stackoverflow',
+    7: 'linkedin',
+    8: 'irs',
+    9: 'nytimes',
+    10: 'cnn',
+    11: 'salesforce',
+    12: 'okta',
+    13: 'wikipedia',
+    14: 'imgur',
+    15: 'dropbox',
+    16: 'etsy',
+    17: 'hulu',
+    18: 'quizlet',
+    19: 'homedepot',
+    20: 'netflix'
 }
 
 ip_directory = {
@@ -37,7 +37,7 @@ def parse_sniffer_data():
         with open(d + "-parsed-sniffer.csv", 'w') as writeto:
             w = csv.writer(writeto)
             for i in range(1, 21):
-                w.writerow([website_directory[i]])
+                web_index = website_directory[i]
                 for j in range(1, 11):
                     with open('sniffer/%s/run%d/packet%d.csv' % (d, j, i)) as csvfile:
                         r = csv.reader(csvfile)
@@ -54,15 +54,19 @@ def parse_sniffer_data():
                             w.writerow([index, time, direction, packet_size])
 
 def parse_trace_data():
-    for d in os.listdir('trace'):
+    for d in os.listdir('new_data'):
         with open(d + "-parsed-ondevice.csv", 'w') as writeto:
             w = csv.writer(writeto)
-            for i in range(1, 21):
-                w.writerow([website_directory[i]])
-                for j in range(1, 11):
-                    with open('trace/%s/run%d/packet%d.csv' % (d, j, i)) as csvfile:
+            for j in range(1, 11):
+                for i in range(1, 21):
+                    web_index = website_directory[i]
+                    with open('new_data/%s/run%d/packet%d.csv' % (d, j, i)) as csvfile:
                         r = csv.reader(csvfile)
                         for row in r:
+                            if 'TLS' in row[4] or 'HTTP' in row[4]:
+                                pass
+                            else:
+                                continue
                             if ip_directory[d] in row[2]:
                                 direction = 1
                             elif ip_directory[d] in row[3]:
@@ -70,10 +74,9 @@ def parse_trace_data():
                             else:
                                 continue
                             time = row[1]
-                            index = row[0]
                             packet_size = row[5]
-                            w.writerow([index, time, direction, packet_size])
+                            w.writerow([web_index, time, direction, packet_size])
 
-parse_sniffer_data()
+# parse_sniffer_data()
 parse_trace_data()
             
