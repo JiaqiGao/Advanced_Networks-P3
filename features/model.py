@@ -1,7 +1,8 @@
+import math
 import numpy as np
 import argparse
-import math
 from sklearn.ensemble import RandomForestClassifier
+from joblib import dump, load
 from typing import List
 import csv
 
@@ -117,7 +118,7 @@ def parse_trace(trace):
     
     # Number of packets
     num_packets = len(trace)
-    feats.append(num_packets)
+    # feats.append(num_packets)
 
     # Total time
     total_time = float(trace[-1][1]) - float(trace[0][1])
@@ -233,24 +234,31 @@ def test_model(model, test_data, sniffer, threshold = .4):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Arguments for training and testing data")
-    parser.add_argument('train', metavar='r', type=int)
+    parser.add_argument('train', metavar='train', type=int)
+    parser.add_argument('data', metavar='d_source', type=int)
 
     args = parser.parse_args()
 
     train_str = ""
-    if args.train == 0:
-        train_data = train_data_local
-        train_str = "Local Data"
+    if args.train:
+        if args.data == 0:
+            train_data = train_data_local
+            train_str = "Local Data"
+        else:
+            train_data = train_data_community
+            train_str = "Community Data"
+
+        print("Beginning Training With %s ...\n" % train_str)
+
+        model = train_model(train_data)
+
+        print('Training Completed')
+    
     else:
-        train_data = train_data_community
-        train_str = "Community Data"
-
-    print("Beginning Training With %s ...\n" % train_str)
-
-    model = train_model(train_data)
-
-    print('Training Completed')
-
+        if args.data == 0:
+            model = load('local_model.joblib')
+        else:
+            model = load('community_model.joblib')
 
     print('\nTesting On Device Perfomance with Local Data ...\n')
 
@@ -263,5 +271,10 @@ if __name__ == '__main__':
     print("\nTesting Sniffer Performance ...\n")
 
     test_model(model, 'Parsed Data (Sniffer)', True)
+
+    if args.data == 0:
+        dump(model, 'local_model.joblib')
+    else:
+        dump(model, 'community_model.joblib')
 
 
