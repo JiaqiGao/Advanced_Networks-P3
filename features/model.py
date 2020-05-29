@@ -1,26 +1,82 @@
 import numpy as np
-from sklearn.neighbors import KNeighborsClassifier
+import argparse
+import math
 from sklearn.ensemble import RandomForestClassifier
 from typing import List
 import csv
+
+
+website_dict = {
+    'cnn': 0,
+    'dropbox': 1,
+    'etsy': 2,
+    'facebook': 3,
+    'homedepot': 4,
+    'hulu': 5,
+    'imgur': 6,
+    'instructure': 7,
+    'irs': 8,
+    'linkedin': 9,
+    'nytimes': 10,
+    'okta': 11,
+    'quizlet': 12,
+    'reddit': 13,
+    'salesforce': 14,
+    'stackoverflow': 15,
+    'wikipedia': 16,
+    'yahoo': 17,
+    'youtube': 18,
+    'netflix': 19,
+    'imdb': 20,
+    'ebay': 21,
+    'twitch': 22,
+    'live': 23
+}
+
+website_dict_invert = {
+    0 : 'cnn',
+    1 : 'dropbox',
+    2 : 'etsy',
+    3 : 'facebook',
+    4 : 'homedepot',
+    5 : 'hulu',
+    6 : 'imgur',
+    7 : 'instructure',
+    8 : 'irs',
+    9 : 'linkedin',
+    10: 'nytimes',
+    11: 'okta',
+    12: 'quizlet',
+    13: 'reddit',
+    14: 'salesforce',
+    15: 'stackoverflow',
+    16: 'wikipedia',
+    17: 'yahoo',
+    18: 'youtube',
+    19: 'netflix',
+    20: 'imdb',
+    21: 'ebay',
+    22: 'twitch',
+    23: 'live',
+}
 
 # our original data
 # test_data = ['day3-parsed-ondevice.csv']
 
 # community data
-# test_data = ['day_3_parsedTLS.csv']
+test_data_community = ['day_3_parsedTLS.csv']
 
 # our new data
-test_data = ['day-3-parsed-ondevice-jl.csv']
+test_data_local = ['day_7_parsed_jl.csv', 'day_8_parsed_jl.csv', 'day_9_parsed_jl.csv']
 
 # our original data
 # train_data = ['day1-parsed-ondevice.csv', 'day2-parsed-ondevice.csv']
 
 # community data
-# train_data = ['day_1_parsedTLS.csv', 'day_2_parsedTLS.csv']
+train_data_community = ['day_1_parsedTLS.csv', 'day_2_parsedTLS.csv']
 
 # our new data
-train_data = ['day-1-parsed-ondevice-jl.csv', 'day-2-parsed-ondevice-jl.csv']
+train_data_local = ['day_1_parsed_jl.csv', 'day_2_parsed_jl.csv', 'day_3_parsed_jl.csv', 'day_4_parsed_jl.csv', 'day_5_parsed_jl.csv', 'day_6_parsed_jl.csv']
 
 
 # Number of consecutive packets with direction '1'
@@ -42,7 +98,7 @@ def get_burst(trace):
     return results
 
 def getUniquePacketLengths(trace):
-    counts = [0]*3000
+    counts = [0]*1500
     for i in trace:
         try:
             counts[int(i[3])] = 1
@@ -56,11 +112,6 @@ def getUniquePacketLengths(trace):
     #         most_common = i+1
     return counts
 
-# def cumul_sums(trace):
-#     num_packets = len(trace)
-#     packets_per_division = num_packets // 100
-#     return
-
 def parse_trace(trace):
     feats = []
     
@@ -73,7 +124,7 @@ def parse_trace(trace):
     feats.append(total_time)
 
     # Fraction of packets incoming
-    incoming_packets = len([x for x in trace if x[2]=='1'])/num_packets
+    incoming_packets = len([x for x in trace if int(float((x[2]))) == 1])/num_packets
     feats.append(incoming_packets)
     
     # Number of burst, Maximum burst, Mean burst
@@ -82,8 +133,6 @@ def parse_trace(trace):
     
     # Unique packet lengths
     feats += getUniquePacketLengths(trace)
-
-    # cumul_sums(trace)
 
     return feats
 
@@ -101,21 +150,22 @@ def extract_features(data_files: List[str]):
                 if row[0] != current_site:
                     if current_trace:
                         X.append(parse_trace(current_trace))
-                        Y.append(current_site)
+                        Y.append(website_dict[current_site])
                         current_trace = []
                     current_site = row[0]
                 current_trace.append(row) 
             X.append(parse_trace(current_trace))
-            Y.append(current_site)
+            Y.append(website_dict[current_site])
     return X, Y
 
-websites = ["cnn", "dropbox", "etsy", "facebook", "homedepot", "hulu", "imgur", "instructure", "irs", "linkedin", "nytimes", "okta", "quizlet", "reddit", "salesforce", "stackoverflow", "wikipedia", "yahoo", "youtube"]
+websites = ["cnn", "dropbox", "etsy", "facebook", "homedepot", "hulu", "imgur", "instructure", 
+"irs", "linkedin", "nytimes", "okta", "quizlet", "reddit", "salesforce", "stackoverflow", "wikipedia", "yahoo", "youtube"]
 
-def extract_features_sniffer(directory: str):
+def extract_features_sniffer(directory: str, start=1, stop=3):
     X = []
     Y = []
     for w in websites:
-        for i in range(1, 3):
+        for i in range(start, stop):
             with open(f'../{directory}/{w}-{i}-processed.csv') as data:
                 r = csv.reader(data)
                 next(r)
@@ -123,51 +173,95 @@ def extract_features_sniffer(directory: str):
                 for row in r:
                     current_trace.append(row[1:])
                 X.append(parse_trace(current_trace))
-                Y.append(w)
+                Y.append(website_dict[w])
     return X, Y
 
-X, Y = extract_features(train_data)
-model = RandomForestClassifier(n_jobs=2, n_estimators=100, oob_score=True)
-model.fit(X, Y)
+def train_model(train_data):
+    X, Y = extract_features(train_data)
+    model = RandomForestClassifier(n_jobs=2, n_estimators=100, oob_score=True)
+    model.fit(X, Y)
+    return model
 
-print('train complete')
-
-# on device test
-test_X, test_Y = extract_features(test_data)
-
-# sniffer test
-s_test_X, s_test_Y = extract_features_sniffer('Parsed Data (Sniffer)')
-
-on_device_score = model.score(test_X, test_Y)
-
-pred_Y = model.predict(test_X)
-
-print("On Device Prediction Score: ", on_device_score)
-
-sniffer_score = model.score(s_test_X, s_test_Y)
-
-sniffer_pred_Y = model.predict(s_test_X)
-
-print("Sniffer Prediction Score: ", sniffer_score)
-
-total = len(s_test_Y)
-correct = 0
-
-errors = {}
-for i in range(len(s_test_Y)):
-    if sniffer_pred_Y[i] == s_test_Y[i]:
-        correct += 1
+def test_model(model, test_data, sniffer, threshold = .4):
+    if sniffer:
+        X, Y = extract_features_sniffer(test_data)
     else:
-        code = sniffer_pred_Y[i]+":"+s_test_Y[i]
-        if not(code in errors):
-            errors[code] = 1
+        X, Y = extract_features(test_data)
+    score = model.score(X, Y)
+    probabilities = model.predict_proba(X)
+    predictions = np.argmax(probabilities, axis = 1)
+
+    inconclusive = 0
+    correct = 0
+    wrong = 0
+
+    total = len(predictions)
+    for i in range(total):
+        if probabilities[i][predictions[i]] > threshold:
+            if model.classes_[predictions[i]] == Y[i]:
+                correct += 1
+            else:
+                wrong += 1
         else:
-            errors[code] += 1
+            inconclusive += 1
 
-errors_list = sorted(errors.items(), key=lambda x: x[1], reverse=True)
+    print("Results:")
+    print("Raw Prediction Score: ", score)
+    print("Prediction Score With Minimum Probability of %f: " % threshold, correct/total)
+    print("Portion of Predictions Marked Inconclusive: ", inconclusive/total)
+    print("Portion of Predictions Falsely Predicted: ", wrong/total)
 
-print("Top three wrong predictions (SNIFFER) (prediction, actual, count)")
-for i in range(3):
-    print(errors_list[i][0].split(":") + [errors_list[i][1]])
+    errors = {}
+    for i in range(total):
+        if model.classes_[predictions[i]] == Y[i]:
+            pass
+        else:
+            code = website_dict_invert[model.classes_[predictions[i]]]+":"+ website_dict_invert[Y[i]]
+            if not(code in errors):
+                errors[code] = 1
+            else:
+                errors[code] += 1
+
+    errors_list = sorted(errors.items(), key=lambda x: x[1], reverse=True)
+
+    print("Top three wrong predictions (prediction, actual, count)")
+    for i in range(3):
+        try:
+            print(errors_list[i][0].split(":") + [errors_list[i][1]])
+        except:
+            pass
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Arguments for training and testing data")
+    parser.add_argument('train', metavar='r', type=int)
+
+    args = parser.parse_args()
+
+    train_str = ""
+    if args.train == 0:
+        train_data = train_data_local
+        train_str = "Local Data"
+    else:
+        train_data = train_data_community
+        train_str = "Community Data"
+
+    print("Beginning Training With %s ...\n" % train_str)
+
+    model = train_model(train_data)
+
+    print('Training Completed')
+
+
+    print('\nTesting On Device Perfomance with Local Data ...\n')
+
+    test_model(model, test_data_local, False)
+
+    print('\nTesting On Device Performance with Community Data ...\n')
+
+    test_model(model, test_data_community, False)
+
+    print("\nTesting Sniffer Performance ...\n")
+
+    test_model(model, 'Parsed Data (Sniffer)', True)
 
 
